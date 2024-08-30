@@ -55,51 +55,57 @@
       <!-- Thêm thông tin về các kỹ năng của bạn -->
     </div>
     <p id="hello">Hello</p>
-    <button id="switchDarkMode">Switch dark mode</button>
+    <p id="haha">A</p>
+    <button id="theme-toggle">Switch dark mode</button>
   </body>
-  <script type="module">
-    if (localStorage.getItem("mode") == "dark") {
-      darkMode();
-      document.getElementById("switchDarkMode").onclick()
+  <script>
+        const hello = document.getElementById("hello");
+    const haha = document.getElementById("haha");
+    const allText = document.querySelectorAll("p, h1, h2, a");
+        function darkMode() {
+      localStorage.setItem("mode","dark")
+      document.getElementById("hello").innerHTML = "Dark mode is on";
+      document.body.style.backgroundColor = "#121212";
+      allText.forEach((element) => {
+        element.style.color = "#F2F2F2";
+      });
     }
-    // 
-    function darkMode() {
-      localStorage.setItem("mode","dark");
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-          const newColorScheme = event.matches ? "dark" : "light";
-          const allText = document.querySelectorAll("p, h1, h2, a");
-          if (newColorScheme == "dark") {
-            document.getElementById("hello").innerHTML = "Dark mode is on ";
-            document.body.style.backgroundColor = "#121212";
-            allText.forEach((element) => {
-              element.style.color = "#F2F2F2";
-            });
-          }
-        });
-      // if (
-      //   window.matchMedia &&
-      //   window.matchMedia("(prefers-color-scheme: dark)").matches
-      // ) {
-      //   // dark mode
-      // }
-    }
-
     function lightMode() {
-      localStorage.setItem("mode","light");
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-          const newColorScheme = event.matches ? "dark" : "light";
-          const allText = document.querySelectorAll("p, h1, h2, a");
-          if (newColorScheme == "light") {
-            document.body.style.backgroundColor = "#FFFFFF";
-            allText.forEach((element) => {
-              element.style.color = "#000000";
-            });
-          }
-    });
-  }
+      document.getElementById("hello").innerHTML = "Dark mode is off";
+      document.body.style.backgroundColor = "#FFFFFF";
+      allText.forEach((element) => {
+        element.style.color = "#000000";
+      });
+    }
+    function checkCurrentTheme() {
+      const currentTheme = localStorage.getItem("theme");
+      if (currentTheme === "dark") {
+        darkMode();
+      } else {
+        lightMode();
+      }
+    }
+    function toggleTheme() {
+      const prefersDarkScheme = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      );
+      if (prefersDarkScheme.matches) {
+        darkMode();
+        localStorage.setItem("theme", "dark");
+      } else {
+        lightMode();
+        localStorage.setItem("theme", "light");
+      }
+    } // Kiểm tra trạng thái ban đầu khi trang tải
+    checkCurrentTheme();
+
+    // Nghe sự kiện thay đổi chủ đề
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        toggleTheme();
+      });
+
+    // Bây giờ, mỗi khi người dùng thay đổi cài đặt hệ thống hoặc tải lại trang, chế độ sẽ được tự động điều chỉnh.
   </script>
 </html>
