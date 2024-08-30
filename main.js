@@ -36,3 +36,10 @@ async function learnEnglish(word) {
     })
 }
 // learnEnglish("hello")
+document.querySelector.getElementById("hello").innerHTML = window.matchMedia
+
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    // dark mode
+    document.querySelector.getElementById("hello").innerHTML = window.matchMedia
+    //  "Dark mode is on "
+}

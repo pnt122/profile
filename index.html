@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>CV của Phạm Ngọc Thanh</title>
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
@@ -54,5 +54,52 @@
       <p>Flutter</p>
       <!-- Thêm thông tin về các kỹ năng của bạn -->
     </div>
+    <p id="hello">Hello</p>
+    <button id="switchDarkMode">Switch dark mode</button>
   </body>
+  <script type="module">
+    if (localStorage.getItem("mode") == "dark") {
+      darkMode();
+      document.getElementById("switchDarkMode").onclick()
+    }
+    // 
+    function darkMode() {
+      localStorage.setItem("mode","dark");
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          const newColorScheme = event.matches ? "dark" : "light";
+          const allText = document.querySelectorAll("p, h1, h2, a");
+          if (newColorScheme == "dark") {
+            document.getElementById("hello").innerHTML = "Dark mode is on ";
+            document.body.style.backgroundColor = "#121212";
+            allText.forEach((element) => {
+              element.style.color = "#F2F2F2";
+            });
+          }
+        });
+      // if (
+      //   window.matchMedia &&
+      //   window.matchMedia("(prefers-color-scheme: dark)").matches
+      // ) {
+      //   // dark mode
+      // }
+    }
+
+    function lightMode() {
+      localStorage.setItem("mode","light");
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          const newColorScheme = event.matches ? "dark" : "light";
+          const allText = document.querySelectorAll("p, h1, h2, a");
+          if (newColorScheme == "light") {
+            document.body.style.backgroundColor = "#FFFFFF";
+            allText.forEach((element) => {
+              element.style.color = "#000000";
+            });
+          }
+    });
+  }
+  </script>
 </html>
